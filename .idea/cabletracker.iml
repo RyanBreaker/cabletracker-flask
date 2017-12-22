@@ -12,8 +12,8 @@
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/app/templates" />
+        <option value="$MODULE_DIR$/venv/Lib/site-packages/flask_bootstrap/templates" />
       </list>
     </option>
   </component>

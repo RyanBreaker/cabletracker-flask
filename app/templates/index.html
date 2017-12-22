@@ -1,18 +1,14 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
+
+    <h3>Rooms</h3>
+    {% if rooms %}
     <ul>
-    <li><a href="{{ url_for('index') }}">Home</a></li>
-    <li><a href="{{ url_for('login') }}">Login</a></li>
+        {% for room in rooms %}
+            <li><a href="{{ url_for('view_room', room_id=room.id) }}">{{ room.name }}</a></li>
+        {% endfor %}
     </ul>
-    <hr>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+    {% endif %}
+
 {% endblock %}
