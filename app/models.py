@@ -24,6 +24,8 @@ class BaseModel(IdModel):
 #
 
 class User(IdModel, UserMixin, db.Model):
+    __tablename__ = 'Users'
+
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
@@ -50,26 +52,31 @@ class User(IdModel, UserMixin, db.Model):
 class Cable(BaseModel, db.Model):
     __tablename__ = 'Cables'
 
-    termination_a = db.Column(db.Integer, db.ForeignKey('termination.id'), index=True, nullable=False)
-    termination_b = db.Column(db.Integer, db.ForeignKey('termination.id'), index=True, nullable=False)
+    termination_a = db.Column(db.Integer, db.ForeignKey('Terminations.id'), index=True, nullable=False)
+    termination_b = db.Column(db.Integer, db.ForeignKey('Terminations.id'), index=True, nullable=False)
 
     @property
     def serial(self):
         return '{0:06x}'.format(self.id)
 
+    @classmethod
+    def from_serial(cls, serial):
+        id_ = int(serial, 16)
+        return cls.query.get(id_)
+
 
 class Termination(BaseModel, db.Model):
     __tablename__ = 'Terminations'
 
-    termination_device = db.Column(db.Integer, db.ForeignKey('termination_device.id'), index=True, nullable=False)
+    termination_device = db.Column(db.Integer, db.ForeignKey('TerminationDevices.id'), index=True, nullable=False)
 
 
 class TerminationDevice(BaseModel, db.Model):
     __tablename__ = 'TerminationDevices'
 
-    rack = db.Column(db.Integer, db.ForeignKey('rack.id'), index=True, nullable=False)
+    rack = db.Column(db.Integer, db.ForeignKey('Racks.id'), index=True, nullable=False)
     unit = db.Column(db.SmallInteger, nullable=False, default=42)
-    type = db.Column(db.Integer, db.ForeignKey('termination_device_type.id'), index=True)
+    type = db.Column(db.Integer, db.ForeignKey('TerminationDeviceTypes.id'), index=True)
 
 
 class TerminationDeviceType(BaseModel, db.Model):
@@ -77,8 +84,10 @@ class TerminationDeviceType(BaseModel, db.Model):
 
 
 class Rack(BaseModel, db.Model):
-    room = db.Column(db.Integer, db.ForeignKey('room.id'), index=True, nullable=False)
+    __tablename__ = 'Racks'
+
+    room = db.Column(db.Integer, db.ForeignKey('Rooms.id'), index=True, nullable=False)
 
 
 class Room(BaseModel, db.Model):
-    pass
+    __tablename__ = 'Rooms'

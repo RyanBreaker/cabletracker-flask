@@ -19,5 +19,4 @@ login = LoginManager(app)
 
 bootstrap = Bootstrap(app)
 
-# noinspection PyUnresolvedReferences
-from app import routes, models, errors
+from app import models, errors, routes

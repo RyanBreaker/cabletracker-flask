@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 
 from app import app
-from app.forms import LoginForm
+from app.forms.user import LoginForm
 from app.models import User, Room
 
 
@@ -10,12 +10,6 @@ from app.models import User, Room
 def index():
     rooms = Room.query.all()
     return render_template('index.html', title='Home', rooms=rooms)
-
-
-@app.route('/room/<room_id>')
-def view_room(room_id):
-    room = Room.query.get(room_id)
-    return room.name
 
 
 @app.route('/login', methods=['GET', 'POST'])
