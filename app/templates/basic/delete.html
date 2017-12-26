@@ -4,7 +4,7 @@
 
     <form action="" method="post">
         {{ form.hidden_tag() }}
-        <p>Are you sure you want to delete {{ object.name }}?<br>(Go back in your browser to cancel.)</p>
+        <p>Are you sure you want to delete '{{ object.name }}'?<br>(Go back in your browser to cancel.)</p>
         {{ form.confirm(class_="btn btn-danger") }}
     </form>
 
