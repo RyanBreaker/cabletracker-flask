@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% set active_page = 'rooms' %}
+{% block app_content %}
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h1>{{ room.name }}</h1>
+            <h2>Description</h2>
+            <p class="table-bordered">{{ room.description }}</p>
+            <a class="btn btn-primary" href="{{ url_for('edit_room', room_id=room.id) }}">Edit Room</a>
+        </div>
+    </div>
+
+{% endblock %}

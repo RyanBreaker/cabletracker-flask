@@ -4,19 +4,44 @@ from app.models import Room
 from app.forms.basic import CreateBasicForm
 
 
-@app.route('/rooms')
+@app.route('/rooms/')
 def view_all_rooms():
     rooms = Room.query.all()
-    return render_template('room/view_room.html', room=rooms)
+    if len(rooms) == 0:
+        flash('No rooms exist yet.')
+        return redirect(url_for('create_room'))
+    return render_template('rooms/view_all_rooms.html', rooms=rooms)
 
 
-@app.route('/rooms/<room_id>')
+@app.route('/rooms/<room_id>/')
 def view_room(room_id):
     room = Room.query.get_or_404(room_id)
-    return render_template('room/view_room.html', room=room)
+    return render_template('rooms/view_room.html', room=room)
 
 
-@app.route('/rooms/create', methods=['GET', 'POST'])
+@app.route('/rooms/<room_id>/edit/', methods=['GET', 'POST'])
+def edit_room(room_id):
+
+    room = Room.query.get_or_404(room_id)
+    form = CreateBasicForm(data={'name': room.name, 'description': room.description})
+
+    if form.validate_on_submit():
+
+        # If name changed
+        if room.name.lower() != form.name.data.lower():
+            if Room.query.filter(Room.name.ilike(form.name.data)).first() is not None:
+                flash('A room with this name already exists.')
+                return redirect(url_for('edit_room', room_id=room_id))
+            room.name = form.name.data
+
+        room.description = form.description.data
+        db.session.commit()
+        return redirect(url_for('view_room', room_id=room_id))
+
+    return render_template('rooms/edit_room.html', form=form, room=room)
+
+
+@app.route('/rooms/create/', methods=['GET', 'POST'])
 def create_room():
 
     form = CreateBasicForm()
@@ -34,4 +59,4 @@ def create_room():
         db.session.commit()
         return redirect(url_for('view_room', room_id=room.id))
 
-    return render_template('room/create_room.html', title='Create Room', form=form)
+    return render_template('rooms/create_room.html', title='Create Room', form=form)

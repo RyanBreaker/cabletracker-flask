@@ -12,7 +12,7 @@ def index():
     return render_template('index.html', title='Home', rooms=rooms)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -37,7 +37,7 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-@app.route('/logout')
+@app.route('/logout/')
 def logout():
     logout_user()
     return redirect(url_for('index'))
