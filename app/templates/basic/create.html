@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% set active_page = 'rooms' %}
-{% set active_dropdown = 'create_room' %}
-
 {% block app_content %}
 
     <div class="row">
         <div class="col-md-6 col-md-offset-2">
-            <h1>Create Room</h1>
+            <h1>{{ title }}</h1>
             {{ wtf.quick_form(form) }}
         </div>
     </div>

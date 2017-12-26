@@ -12,6 +12,12 @@
             (url_for('view_all_rooms'), 'view_all_rooms', 'View All'),
         )
     ),
+    ('#', 'termtypes', 'Termination Device Types',
+        (
+            (url_for('create_termtype'), 'create_termtype', 'Create'),
+            (url_for('view_all_termtypes'), 'view_all_termtypes', 'View All Types'),
+        )
+    ),
 ]-%}
 {% set active_page = active_page|default('index') %}
 {% set active_dropdown = active_dropdown|default('') %}

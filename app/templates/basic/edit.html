@@ -1,16 +1,13 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
-{% set active_page = 'rooms' %}
-{% set active_dropdown = 'create_room' %}
-
 {% block app_content %}
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h1>Edit Room</h1>
+            <h1>{{ title }}</h1>
             {{ wtf.quick_form(form) }}
-            <a class="btn-danger btn" href="{{ url_for('view_room', room_id=room.id) }}">Cancel</a>
+            <a class="btn-danger btn" href="{{ url_for(viewlink, object_id=object.id) }}">Cancel</a>
         </div>
     </div>
 

@@ -11,7 +11,12 @@ def get_models_for_choice_field(model):
     return models_list
 
 
-class CreateBasicForm(FlaskForm):
+class BasicCreateForm(FlaskForm):
+    """
+    Basic form for models that only have name and description columns.
+    Can also be inherited by other forms that need to use name, description,
+    and submit Fields.
+    """
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description')
     submit = SubmitField('Submit')

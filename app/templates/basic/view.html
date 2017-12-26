@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h1>{{ object.name }}</h1>
+            {% if object.description|length > 0 %}
+                <h2>Description</h2>
+                <p class="table-bordered">{{ object.description }}</p>
+            {% else %}
+                <h2>This object has no description.</h2>
+            {% endif %}
+            <a class="btn btn-primary" href="{{ url_for(editlink, object_id=object.id) }}">Edit Room</a>
+        </div>
+    </div>
+
+{% endblock %}

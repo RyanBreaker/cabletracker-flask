@@ -6,7 +6,7 @@
     {% if rooms %}
     <ul>
         {% for room in rooms %}
-            <li><a href="{{ url_for('view_room', room_id=room.id) }}">{{ room.name }}</a></li>
+            <li><a href="{{ url_for('view_room', object_id=room.id) }}">{{ room.name }}</a></li>
         {% endfor %}
     </ul>
     {% endif %}
