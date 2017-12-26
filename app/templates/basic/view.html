@@ -11,7 +11,8 @@
             {% else %}
                 <h2>This object has no description.</h2>
             {% endif %}
-            <a class="btn btn-primary" href="{{ url_for(editlink, object_id=object.id) }}">Edit Room</a>
+            <a class="btn btn-primary" href="{{ url_for(links.edit, object_id=object.id) }}">Edit Room</a>
+            <a class="btn btn-danger" href="{{ url_for(links.delete, object_id=object.id) }}">Delete Room</a>
         </div>
     </div>
 
