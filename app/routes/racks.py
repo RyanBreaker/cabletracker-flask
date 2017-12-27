@@ -1,7 +1,7 @@
 from flask import render_template
 
 from app import app
-from models import Rack
+from app.models import Rack
 
 
 @app.route('/racks/')
