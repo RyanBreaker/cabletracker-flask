@@ -1,1 +1,1 @@
-from routes import index, rooms, termdevicetypes
+from . import index, racks, rooms, termdevicetypes

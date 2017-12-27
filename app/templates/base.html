@@ -15,7 +15,12 @@
     ('#', 'termtypes', 'Termination Device Types',
         (
             (url_for('create_termtype'), 'create_termtype', 'Create'),
-            (url_for('view_all_termtypes'), 'view_all_termtypes', 'View All Types'),
+            (url_for('view_all_termtypes'), 'view_all_termtypes', 'View All'),
+        )
+    ),
+    ('#', 'racks', 'Racks',
+        (
+            (url_for('view_all_racks'), 'view_all_racks', 'View All'),
         )
     ),
 ]-%}

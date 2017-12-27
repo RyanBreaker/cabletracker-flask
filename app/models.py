@@ -87,6 +87,7 @@ class Rack(BaseModel, db.Model):
     __tablename__ = 'Racks'
 
     room = db.Column(db.Integer, db.ForeignKey('Rooms.id'), index=True, nullable=False)
+    units = db.Column(db.SmallInteger, nullable=False, default=42)
 
 
 class Room(BaseModel, db.Model):
