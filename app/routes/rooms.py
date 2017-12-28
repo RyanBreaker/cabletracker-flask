@@ -1,7 +1,8 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
-from app.models import Room
-from app.forms.basic import BasicForm, BasicDeleteForm
+from app.models.tracking import Room
+from app.forms.base import BaseForm, BaseDeleteForm
+
 
 ACTIVE_PAGE = URLPREFIX = 'rooms'
 LINKS = {
@@ -33,7 +34,7 @@ def view_room(object_id):
 def edit_room(object_id):
 
     room = Room.query.get_or_404(object_id)
-    form = BasicForm(data={'name': room.name, 'description': room.description})
+    form = BaseForm(data={'name': room.name, 'description': room.description})
 
     if form.validate_on_submit():
 
@@ -54,7 +55,7 @@ def edit_room(object_id):
 @app.route('/{}/create/'.format(URLPREFIX), methods=['GET', 'POST'])
 def create_room():
 
-    form = BasicForm()
+    form = BaseForm()
 
     if form.validate_on_submit():
         room = Room.query.filter(Room.name.ilike(form.name.data)).first()
@@ -76,7 +77,7 @@ def create_room():
 @app.route('/{}/<object_id>/delete/'.format(URLPREFIX), methods=['GET', 'POST'])
 def delete_room(object_id):
 
-    form = BasicDeleteForm()
+    form = BaseDeleteForm()
     room = Room.query.get_or_404(object_id)
 
     if form.validate_on_submit():

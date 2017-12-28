@@ -3,15 +3,15 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
-def get_models_for_choice_field(model):
-    models_list = []
-    all_models = model.query.all()
-    for model in all_models:
-        models_list += [(model.id, model.name)]
-    return models_list
+def objects_for_selectfield(model):
+    object_list = []
+    all_objects = model.query.all()
+    for object_ in all_objects:
+        object_list += [(object_.id, object_.name)]
+    return object_list
 
 
-class BasicForm(FlaskForm):
+class BaseForm(FlaskForm):
     """
     Basic form for models that only have name and description columns.
     Can also be inherited by other forms that need to use name, description,
@@ -22,5 +22,5 @@ class BasicForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-class BasicDeleteForm(FlaskForm):
+class BaseDeleteForm(FlaskForm):
     confirm = SubmitField('Delete')

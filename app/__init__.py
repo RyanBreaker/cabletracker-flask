@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_htmlmin import HTMLMIN
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 
 from config import Config
+
+__all__ = ['app', 'db', 'migrate', 'forms', 'models', 'routes']
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -19,5 +21,6 @@ login = LoginManager(app)
 
 bootstrap = Bootstrap(app)
 
+# Allow migrate to work
 # noinspection PyUnresolvedReferences
-from app import forms, models, routes
+from .models import *

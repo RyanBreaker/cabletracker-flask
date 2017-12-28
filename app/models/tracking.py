@@ -1,48 +1,5 @@
-from flask_login import UserMixin
-from werkzeug.security import check_password_hash, generate_password_hash
-from app import db, login
-
-
-#
-# Abstract Models
-#
-
-class IdModel:
-    id = db.Column(db.Integer, primary_key=True)
-
-
-class BaseModel(IdModel):
-    name = db.Column(db.String(32), unique=True, nullable=False)
-    description = db.Column(db.String, default=db.null)
-
-    def __repr__(self):
-        return self.name
-
-
-#
-# User Model
-#
-
-class User(IdModel, UserMixin, db.Model):
-    __tablename__ = 'Users'
-
-    username = db.Column(db.String(64), index=True, unique=True, nullable=False)
-    email = db.Column(db.String(128), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
-
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    @classmethod
-    @login.user_loader
-    def load_user(cls, id_):
-        return cls.query.get(int(id_))
+from app import db
+from app.models.base import BaseModel
 
 
 #

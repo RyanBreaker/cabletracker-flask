@@ -3,7 +3,8 @@ from flask_login import current_user, login_user, logout_user
 
 from app import app
 from app.forms import LoginForm
-from app.models import Room, User
+from app.models.user import User
+from app.models.tracking import Room
 
 
 @app.route('/')

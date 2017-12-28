@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
-from app.models import TerminationDeviceType as TermDeviceType
-from app.forms.basic import BasicForm, BasicDeleteForm
+from app.models.tracking import TerminationDeviceType as TermDeviceType
+from app.forms.base import BaseForm, BaseDeleteForm
 
 ACTIVE_PAGE = URL_PREFIX = 'termtypes'
 LINKS = {
@@ -33,7 +33,7 @@ def view_termtype(object_id):
 def edit_termtype(object_id):
 
     termtype = TermDeviceType.query.get_or_404(object_id)
-    form = BasicForm(data={'name': termtype.name, 'description': termtype.description})
+    form = BaseForm(data={'name': termtype.name, 'description': termtype.description})
 
     if form.validate_on_submit():
 
@@ -55,7 +55,7 @@ def edit_termtype(object_id):
 @app.route('/{}/create/'.format(URL_PREFIX), methods=['GET', 'POST'])
 def create_termtype():
 
-    form = BasicForm()
+    form = BaseForm()
 
     if form.validate_on_submit():
         # Get any termtypes of the preexisting name
@@ -78,7 +78,7 @@ def create_termtype():
 @app.route('/{}/<object_id>/delete/'.format(URL_PREFIX), methods=['GET', 'POST'])
 def delete_termtype(object_id):
 
-    form = BasicDeleteForm()
+    form = BaseDeleteForm()
     termtype = TermDeviceType.query.get_or_404(object_id)
 
     if form.validate_on_submit():

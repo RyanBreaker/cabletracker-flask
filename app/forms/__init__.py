@@ -1,2 +1,2 @@
-from .basic import BasicForm, BasicDeleteForm
+from .base import BaseForm, BaseDeleteForm
 from .user import LoginForm
