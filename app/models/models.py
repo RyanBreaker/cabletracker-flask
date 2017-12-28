@@ -13,7 +13,7 @@ class IdModel:
 
 class BaseModel(IdModel):
     name = db.Column(db.String(32), unique=True, nullable=False)
-    description = db.Column(db.String, unique=False, nullable=False, default='')
+    description = db.Column(db.String, default=db.null)
 
     def __repr__(self):
         return self.name
@@ -26,7 +26,7 @@ class BaseModel(IdModel):
 class User(IdModel, UserMixin, db.Model):
     __tablename__ = 'Users'
 
-    username = db.Column(db.String(64), index=True, unique=True)
+    username = db.Column(db.String(64), index=True, unique=True, nullable=False)
     email = db.Column(db.String(128), index=True, unique=True)
     password_hash = db.Column(db.String(128))
 
@@ -76,7 +76,7 @@ class TerminationDevice(BaseModel, db.Model):
 
     rack = db.Column(db.Integer, db.ForeignKey('Racks.id'), index=True, nullable=False)
     unit = db.Column(db.SmallInteger, nullable=False, default=42)
-    type = db.Column(db.Integer, db.ForeignKey('TerminationDeviceTypes.id'), index=True)
+    type = db.Column(db.Integer, db.ForeignKey('TerminationDeviceTypes.id'), index=True, nullable=False)
 
 
 class TerminationDeviceType(BaseModel, db.Model):
