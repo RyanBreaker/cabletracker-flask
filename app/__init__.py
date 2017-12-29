@@ -21,6 +21,8 @@ login = LoginManager(app)
 
 bootstrap = Bootstrap(app)
 
-# Allow migrate to work
+# Allows migrate to work
 # noinspection PyUnresolvedReferences
 from .models import *
+# noinspection PyUnresolvedReferences
+from .routes import *
