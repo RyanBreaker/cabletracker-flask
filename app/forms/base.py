@@ -1,3 +1,4 @@
+from flask import flash, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -20,6 +21,12 @@ class BaseForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description')
     submit = SubmitField('Submit')
+
+    def name_exists(self, object_, model):
+        if self.name.data.lower() != object_.name.lower():
+            if model.query.filter(model.name.ilike(self.name.data)).first() is not None:
+                return True
+        return False
 
 
 class BaseDeleteForm(FlaskForm):

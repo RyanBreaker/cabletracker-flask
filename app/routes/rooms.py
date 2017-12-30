@@ -39,11 +39,9 @@ def edit_room(object_id):
     if form.validate_on_submit():
 
         # If name changed
-        if room.name.lower() != form.name.data.lower():
-            if Room.query.filter(Room.name.ilike(form.name.data)).first() is not None:
-                flash('A room with this name already exists.')
-                return redirect(url_for('edit_room', object_id=object_id))
-            room.name = form.name.data
+        if form.name_exists(room, Room):
+            flash('A room with this name already exists.')
+            return redirect(url_for('edit_room', object_id=object_id))
 
         room.description = form.description.data
         db.session.commit()

@@ -1,8 +1,8 @@
 from flask import render_template
 
 from app import app
+from app.forms.racks import RackForm
 from app.models.tracking import Rack
-
 
 URL_PREFIX = 'racks'
 
@@ -15,6 +15,16 @@ def view_all_racks():
 
 @app.route('/{}/create/'.format(URL_PREFIX), methods=['GET', 'POST'])
 def create_rack():
+    form = RackForm()
+
+    if form.validate_on_submit():
+        pass
+
+    return render_template('racks/create.html', form=form)
+
+
+@app.route('/{}/<rack_id>/edit/'.format(URL_PREFIX), methods=['GET', 'POST'])
+def edit_rack(rack_id):
     pass
 
 
