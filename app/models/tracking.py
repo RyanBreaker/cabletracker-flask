@@ -6,7 +6,7 @@ from app.models.base import BaseModel
 # Tracking Models
 #
 
-class Cable(BaseModel, db.Model):
+class Cable(BaseModel):
     __tablename__ = 'Cables'
 
     termination_a = db.Column(db.Integer, db.ForeignKey('Terminations.id'), index=True, nullable=False)
@@ -22,13 +22,13 @@ class Cable(BaseModel, db.Model):
         return cls.query.get(id_)
 
 
-class Termination(BaseModel, db.Model):
+class Termination(BaseModel):
     __tablename__ = 'Terminations'
 
     termination_device = db.Column(db.Integer, db.ForeignKey('TerminationDevices.id'), index=True, nullable=False)
 
 
-class TerminationDevice(BaseModel, db.Model):
+class TerminationDevice(BaseModel):
     __tablename__ = 'TerminationDevices'
 
     rack = db.Column(db.Integer, db.ForeignKey('Racks.id'), index=True, nullable=False)
@@ -36,16 +36,16 @@ class TerminationDevice(BaseModel, db.Model):
     type = db.Column(db.Integer, db.ForeignKey('TerminationDeviceTypes.id'), index=True, nullable=False)
 
 
-class TerminationDeviceType(BaseModel, db.Model):
+class TerminationDeviceType(BaseModel):
     __tablename__ = 'TerminationDeviceTypes'
 
 
-class Rack(BaseModel, db.Model):
+class Rack(BaseModel):
     __tablename__ = 'Racks'
 
     room = db.Column(db.Integer, db.ForeignKey('Rooms.id'), index=True, nullable=False)
     units = db.Column(db.SmallInteger, nullable=False, default=42)
 
 
-class Room(BaseModel, db.Model):
+class Room(BaseModel):
     __tablename__ = 'Rooms'

@@ -3,7 +3,7 @@ from wtforms.validators import DataRequired
 
 from app.forms import BaseForm
 from app.forms.base import objects_for_selectfield
-from app.models import Room
+from app.models.tracking import Room
 
 
 class RackForm(BaseForm):

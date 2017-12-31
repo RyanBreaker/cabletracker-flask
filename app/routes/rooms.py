@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
+from app.forms.base import BaseForm, BaseDeleteForm, name_changed
 from app.models.tracking import Room
-from app.forms.base import BaseForm, BaseDeleteForm
 
 
 ACTIVE_PAGE = URLPREFIX = 'rooms'
@@ -39,9 +39,11 @@ def edit_room(object_id):
     if form.validate_on_submit():
 
         # If name changed
-        if form.name_exists(room, Room):
-            flash('A room with this name already exists.')
-            return redirect(url_for('edit_room', object_id=object_id))
+        if name_changed(room.name, form.name.data):
+            if Room.name_exists(form.name.data):
+                flash('A room with this name already exists.')
+                return redirect(url_for('edit_room', object_id=object_id))
+            room.name = form.name.data
 
         room.description = form.description.data
         db.session.commit()
@@ -56,9 +58,8 @@ def create_room():
     form = BaseForm()
 
     if form.validate_on_submit():
-        room = Room.query.filter(Room.name.ilike(form.name.data)).first()
 
-        if room is not None:
+        if Room.name_exists(form.name.data):
             flash('A Room with this name already exists.')
             return redirect(url_for('create_room'))
 

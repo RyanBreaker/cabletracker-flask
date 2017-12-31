@@ -12,6 +12,10 @@ def objects_for_selectfield(model):
     return object_list
 
 
+def name_changed(old, new):
+    return old.lower() != new.lower()
+
+
 class BaseForm(FlaskForm):
     """
     Basic form for models that only have name and description columns.
@@ -21,12 +25,6 @@ class BaseForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     description = StringField('Description')
     submit = SubmitField('Submit')
-
-    def name_exists(self, object_, model):
-        if self.name.data.lower() != object_.name.lower():
-            if model.query.filter(model.name.ilike(self.name.data)).first() is not None:
-                return True
-        return False
 
 
 class BaseDeleteForm(FlaskForm):

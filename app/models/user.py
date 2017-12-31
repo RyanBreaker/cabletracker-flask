@@ -9,7 +9,7 @@ from app.models.base import IdModel
 # User Model
 #
 
-class User(IdModel, UserMixin, db.Model):
+class User(IdModel, UserMixin):
     __tablename__ = 'Users'
 
     username = db.Column(db.String(64), index=True, unique=True, nullable=False)

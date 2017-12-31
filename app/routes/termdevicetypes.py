@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from app import app, db
 from app.models.tracking import TerminationDeviceType as TermDeviceType
-from app.forms.base import BaseForm, BaseDeleteForm
+from app.forms.base import BaseForm, BaseDeleteForm, name_changed
 
 ACTIVE_PAGE = URL_PREFIX = 'termtypes'
 LINKS = {
@@ -38,8 +38,8 @@ def edit_termtype(object_id):
     if form.validate_on_submit():
 
         # If name changed
-        if termtype.name.lower() != form.name.data.lower():
-            if TermDeviceType.query.filter(TermDeviceType.name.ilike(form.name.data)).first() is not None:
+        if name_changed(termtype.name, form.name.data):
+            if TermDeviceType.name_exists(form.name.data):
                 flash('A termination device type with this name already exists.')
                 return redirect(url_for('edit_termtype', object_id=object_id))
             termtype.name = form.name.data
@@ -58,10 +58,8 @@ def create_termtype():
     form = BaseForm()
 
     if form.validate_on_submit():
-        # Get any termtypes of the preexisting name
-        termtype = TermDeviceType.query.filter(TermDeviceType.name.ilike(form.name.data)).first()
 
-        if termtype is not None:
+        if TermDeviceType.name_exists(form.name.data):
             flash('A termination device type with this name already exists.')
             return redirect(url_for('create_termtype'))
 
